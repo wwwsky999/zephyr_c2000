@@ -1,0 +1,99 @@
+# TI TMS320C28x (C2000) architecture options
+#
+# NOTE: C28x has 16-bit bytes (CHAR_BIT == 16).  Subsystems that exchange
+# 8-bit byte streams (networking, file systems, most protocol stacks) must
+# be disabled or adapted before they can be enabled for this architecture.
+
+menu "TI C2000 (C28x) Options"
+	depends on C2000
+
+config ARCH
+	string
+	default "c2000"
+
+config NUM_IRQS
+	int
+	default 128
+
+config NUM_IRQ_PRIO_LEVELS
+	int
+	default 1
+	help
+	  The C28x ePIE has a fixed hardware priority per group/interrupt,
+	  so Zephyr's software priority levels are not used.  One level keeps
+	  the scheduler and IRQ_CONNECT() usable.
+
+config GEN_ISR_TABLES
+	default n
+
+config GEN_SW_ISR_TABLE
+	default n
+
+config XIP
+	default y
+
+config MAIN_STACK_SIZE
+	default 1024
+
+config INITIALIZATION_STACK_SIZE
+	default 512
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+	int
+	default 200000000
+
+config TEST_EXTRA_STACK_SIZE
+	default 128
+
+# ------------------------------------------------------------
+# C2000 dual-core + CLA options
+# ------------------------------------------------------------
+
+config C2000_SMP_CPU2
+	bool
+	prompt "Start CPU2 secondary core"
+	help
+	  F2837xD is a dual-core device. Say Y here to have CPU1 boot
+	  CPU2 via the IPC Boot Mode register after bring-up.  A CPU2
+	  image must be linked at its own Flash/RAM addresses and provide
+	  the _cpu2_boot_addr symbol; otherwise the boot is silently
+	  skipped.  When disabled, CPU2 stays in reset.
+
+config C2000_CLA1
+	bool
+	prompt "Enable CPU1 CLA (Control Law Accelerator 1)"
+	depends on C2000
+	help
+	  Say Y to clock, reset and gate the CLA1 coprocessor owned by
+	  CPU1.  The CLA will be left gated (MSTAT = 0) until CPU1 issues
+	  an MSTART command in application code — this prevents spurious
+	  execution before the CLA program RAM is loaded.  CLA1 is owned by
+	  CPU1 and does not depend on CPU2 being present.
+
+config C2000_CLA2
+	bool
+	prompt "Enable CPU2 CLA (Control Law Accelerator 2)"
+	depends on C2000_SMP_CPU2
+	help
+	  Say Y to clock, reset and gate CLA2.  Requires CONFIG_C2000_SMP_CPU2.
+
+config C2000_FLASH_PUMP_ACTIVE
+	bool
+	prompt "Keep Flash pump in active power mode"
+	default y
+	help
+	  When Y, the Flash pump is forced to active mode at boot so the
+	  first Flash access does not incur a pump wake-up delay.  Power
+	  saving builds may set this to N — the pump sleeps after each
+	  access and wakes automatically on the next one.
+
+config C2000_PLL_INIT
+	bool
+	prompt "Configure PLL to 200 MHz at boot"
+	default y
+	help
+	  Y = write SYSPLLCTL1/SYSPLLMULT/SYSCLKDIVSEL to lock the system
+	  PLL on XTAL × 40 / 2 = 200 MHz.  N = leave the clocking as the
+	  Boot ROM left it (usually INTOSC1 at 10 MHz).
+
+endmenu

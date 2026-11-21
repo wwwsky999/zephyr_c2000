@@ -1,0 +1,15 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+description: TI TMS320F2837xD SCI (UART)
+
+compatible: "ti,f2837xd-scia"
+
+include: [uart-controller.yaml, base.yaml]
+
+properties:
+  reg:
+    required: true
+  current-speed:
+    type: int
+    required: true

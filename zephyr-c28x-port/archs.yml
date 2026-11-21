@@ -1,0 +1,54 @@
+# Zephyr 架构注册文件
+#
+# Copyright (C) 2026 WWWSKY999. All rights reserved.
+
+# C28x 架构
+arches:
+  - name: c28x
+    type: c28x
+    description: TI C2000 C28x DSP 架构
+    files:
+      - arch/c28x/core/thread.c
+      - arch/c28x/include/arch.h
+      - arch/c28x/include/kernel_arch_data.h
+      - arch/c28x/include/kernel_arch_func.h
+      - arch/c28x/include/thread.h
+      - arch/c28x/include/asm.h
+    dependencies:
+      - atomic_operations_c
+      - atomic_operations_builtin
+      - has_cxx
+    features:
+      - unified_memory
+      - hw_fpu
+      - large_model
+      - linker_sections
+    smp: false
+
+# TMS320F2837x SoC
+archs:
+  - name: ti_f2837x
+    type: soc
+    description: TI TMS320F2837x SoC
+    files:
+      - soc/ti/tms320f2837x/soc.h
+      - soc/ti/tms320f2837x/Kconfig
+    dependencies:
+      - arch/c28x
+    features:
+      - smp
+    smp: true
+
+# F28377D 板
+archs:
+  - name: f28377d
+    type: board
+    description: TI F28377D 开发板
+    files:
+      - boards/ti/f28377d/board.cmake
+      - boards/ti/f28377d/Kconfig
+    dependencies:
+      - soc/ti/tms320f2837x
+    features:
+      - smp
+    smp: true

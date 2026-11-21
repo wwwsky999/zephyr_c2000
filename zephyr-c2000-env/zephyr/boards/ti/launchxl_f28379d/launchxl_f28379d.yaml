@@ -1,0 +1,12 @@
+identifier: ti,launchxl-f28379d
+name: TI LAUNCHXL-F28379D
+type: board
+arch: c2000
+toolchain:
+  - ti-cgt-c2000
+supported:
+  - serial
+  - gpio
+  - timer
+testing:
+  ignored: true

@@ -1,0 +1,61 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+CONFIG_SERIAL=y
+CONFIG_UART_CONSOLE=y
+CONFIG_CONSOLE=y
+CONFIG_PRINTK=y
+
+# Use the TI RTS consistently instead of mixing its headers with minimal libc.
+CONFIG_EXTERNAL_LIBC=y
+CONFIG_LIBC_ALLOW_LESS_THAN_64BIT_TIME=y
+
+CONFIG_MAIN_STACK_SIZE=1024
+CONFIG_SYSTEM_WORKQUEUE_STACK_SIZE=1024
+
+# ePIE and the C2000Ware register definitions do not use the generic
+# software ISR table.  Keep gen_isr_tables enabled though: it produces
+# an empty isr_tables.c that triggers Zephyr's final linker pass,
+# which is how all the kernel/driver libraries get linked in.
+CONFIG_GEN_ISR_TABLES=y
+CONFIG_GEN_SW_ISR_TABLE=n
+
+# hex2000 only produces Intel HEX; there is no raw binary backend.
+CONFIG_BUILD_OUTPUT_BIN=n
+
+# Post-build toolchain outputs that rely on GNU binutils equivalents which
+# C2000 CGT does not provide drop-in replacements for.  We will add a
+# dedicated hex2000 step once the full kernel links.
+CONFIG_BUILD_OUTPUT_HEX=n
+CONFIG_OUTPUT_STAT=n
+CONFIG_OUTPUT_SYMBOLS=n
+CONFIG_OUTPUT_DISASSEMBLY=n
+CONFIG_OUTPUT_PRINT_MEMORY_USAGE=n
+
+# check_init_priorities.py uses pyelftools; TI-COFF is not an ELF variant.
+# A COFF-aware replacement will land once the kernel links.
+CONFIG_CHECK_INIT_PRIORITIES=n
+
+# POSIX C library extensions pull in posix_types.h which collides with TI RTS
+# <sys/types.h> (both define pid_t and friends).  Also disable the higher
+# POSIX menu that auto-selects POSIX_C_LIB_EXT.
+CONFIG_POSIX_C_LIB_EXT=n
+CONFIG_POSIX_API=n
+CONFIG_POSIX_C_LANG_SUPPORT_R=n
+
+# ----- C2000 dual-core + CLA bring-up -----
+# Enable CPU1 + CPU2 + both CLAs.  CPU2 boot is fully gated behind
+# CONFIG_C2000_SMP_CPU2 in prep_c.c — if a CPU2 image is not linked
+# in, the boot is skipped safely.
+CONFIG_C2000_SMP_CPU2=y
+CONFIG_C2000_CLA1=y
+CONFIG_C2000_CLA2=y
+
+# arch_num_cpus() reports this; prep_c.c dispatches at boot via
+# IPCBootSTS.SYSTEM_READY — no Zephyr SMP framework is used because
+# each CPU runs its own independent kernel instance.
+CONFIG_MP_MAX_NUM_CPUS=2
+
+# Flash + PLL — these must be tuned to the LaunchPad's 200 MHz target.
+CONFIG_C2000_FLASH_PUMP_ACTIVE=y
+CONFIG_C2000_PLL_INIT=y

@@ -1,0 +1,6 @@
+family:
+- name: ti_f2837xd
+  series:
+  - name: f2837xd
+    socs:
+    - name: ti_f2837xd

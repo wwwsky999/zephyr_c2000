@@ -1,0 +1,10 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_FAMILY_TI_F2837XD
+	bool
+
+config SOC_FAMILY
+	default "ti_f2837xd" if SOC_FAMILY_TI_F2837XD
+
+rsource "*/Kconfig.soc"

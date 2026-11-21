@@ -1,0 +1,25 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_SERIES_F2837XD
+	bool
+	select SOC_FAMILY_TI_F2837XD
+
+config SOC_SERIES
+	default "f2837xd" if SOC_SERIES_F2837XD
+
+config SOC_TI_F2837XD
+	bool
+	select SOC_SERIES_F2837XD
+	select C2000
+	# No select BUILD_OUTPUT_HEX: hex2000's CLI cannot be expressed through
+	# Zephyr's objcopy-oriented bintools template, so CONFIG_BUILD_OUTPUT_HEX
+	# must stay n.  The .hex image is instead produced unconditionally by the
+	# dedicated hex2000 post-build step in
+	# cmake/linker/ti-cgt-c2000/target.cmake.
+	help
+	  TI TMS320F2837xD dual-core C28x MCU (200 MHz, 1 MB flash,
+	  204 KB RAM per core, FPU32, TMU).
+
+config SOC
+	default "ti_f2837xd" if SOC_TI_F2837XD

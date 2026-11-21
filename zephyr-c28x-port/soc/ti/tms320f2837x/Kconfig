@@ -1,0 +1,41 @@
+# TI TMS320F2837x SoC 支持
+#
+# Copyright (C) 2026 WWWSKY999. All rights reserved.
+#
+# F2837xD 是双核 C28x DSP，包含 CPU1 和 CPU2
+
+config SOC_TI_F2837X
+	bool "TI TMS320F2837x"
+	select ARCH_C28X
+	select SOC_TI_F2837X
+	select SOC_TI_F2837x_FAMILY
+	select SOC_TI_F2837x_SOC_DRIVER
+	select SOC_TI_F2837x_SOC_NAME
+	select SOC_TI_F2837x_SOC_FAMILY
+	select SOC_TI_F2837x_SMP
+	help
+	  TI TMS320F2837x SoC 支持。
+	  F2837xD 是双核 C28x DSP，包含 CPU1 和 CPU2。
+
+if SOC_TI_F2837X
+
+config SOC_TI_F2837x_FAMILY
+	string "F2837xD"
+	default "F2837xD"
+
+config SOC_TI_F2837x_SOC_NAME
+	string "TMS320F2837x"
+	default "TMS320F2837x"
+
+config SOC_TI_F2837x_SOC_FAMILY
+	string "F2837xD"
+	default "F2837xD"
+
+config SOC_TI_F2837x_SMP
+	bool "SMP 支持"
+	default n
+	depends on SMP
+	help
+	  F2837xD 双核 CPU1/CPU2 上的对称多处理支持。
+
+endif # SOC_TI_F2837X

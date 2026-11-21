@@ -1,0 +1,6 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_LAUNCHXL_F28379D
+	select SOC_TI_F2837XD
+	select SOC_EARLY_INIT_HOOK

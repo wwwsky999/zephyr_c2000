@@ -1,0 +1,11 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+config TI_F2837XD_CPUTIMER
+	bool "TI F2837xD CPU timer system clock"
+	default y
+	depends on C2000
+	select TICKLESS_CAPABLE
+	help
+	  Uses CPU timer 0 as the Zephyr system clock.  The timer runs at
+	  SYSCLK (200 MHz) and currently generates a fixed 1 ms tick.

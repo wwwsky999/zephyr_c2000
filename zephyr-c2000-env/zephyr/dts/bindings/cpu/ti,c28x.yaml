@@ -1,0 +1,12 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+description: TI C28x CPU node
+
+compatible: "ti,c28x"
+
+include: base.yaml
+
+properties:
+  reg:
+    required: true

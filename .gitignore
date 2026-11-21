@@ -1,0 +1,27 @@
+# Upstream clones, west workspace, toolchains and env (not part of this repo)
+/.west/
+/bootloader/
+/modules/
+/tools/
+/zephyr/
+/zephyr-c28x-build/
+/zephyr-c2000-all.tar/
+
+# Root-level build logs and probe artifacts
+*.log
+dirs*.txt
+err*.txt
+hash*.txt
+res*.txt
+root*.txt
+tail*.txt
+ti_*.obj
+
+# Build outputs (any depth)
+build/
+*.obj
+*.out
+*.map
+
+# Disabled embedded git metadata
+**/.git.disabled

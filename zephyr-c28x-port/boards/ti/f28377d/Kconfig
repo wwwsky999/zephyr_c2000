@@ -1,0 +1,38 @@
+# TI F28377D 开发板
+#
+# Copyright (C) 2026 WWWSKY999. All rights reserved.
+
+config BOARD_F28377D
+	bool "TI F28377D 开发板"
+	select SOC_TI_F2837X
+	select BOARD_F28377D
+	select BOARD_F2837x_FAMILY
+	select BOARD_F2837x_SOC_NAME
+	select BOARD_F2837x_SOC_FAMILY
+	select BOARD_F2837x_SMP
+	help
+	  TI TMS320F28377D 开发板支持。
+	  基于 TI C2000 C28x 架构，使用 F28377D 芯片。
+
+if BOARD_F28377D
+
+config BOARD_F2837x_FAMILY
+	string "F28377D"
+	default "F28377D"
+
+config BOARD_F2837x_SOC_NAME
+	string "TMS320F28377D"
+	default "TMS320F28377D"
+
+config BOARD_F2837x_SOC_FAMILY
+	string "F28377D"
+	default "F28377D"
+
+config BOARD_F2837x_SMP
+	bool "SMP 支持"
+	default n
+	depends on SMP
+	help
+	  F28377D 双核 CPU1/CPU2 上的对称多处理支持。
+
+endif # BOARD_F28377D

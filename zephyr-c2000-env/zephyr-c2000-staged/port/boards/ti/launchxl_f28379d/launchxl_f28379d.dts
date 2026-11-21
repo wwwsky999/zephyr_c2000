@@ -1,0 +1,44 @@
+/*
+ * Copyright (c) 2026 Zephyr C2000 port
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+/ {
+	model = "TI LAUNCHXL-F28379D";
+	compatible = "ti,launchxl-f28379d";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		zephyr,console = &scia;
+		zephyr,sram = &ram0;
+		zephyr,flash = &flash0;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "ti,c28x";
+			reg = <0>;
+		};
+	};
+
+	ram0: memory@8000 {
+		reg = <0x00008000 0x00020000>;
+	};
+
+	flash0: flash@80000 {
+		reg = <0x00080000 0x00100000>;
+	};
+
+	scia: serial@7200 {
+		compatible = "ti,f2837xd-scia";
+		reg = <0x00007200 0x0020>;
+		current-speed = <115200>;
+		status = "okay";
+	};
+};

@@ -1,0 +1,20 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+# TI TMS320F2837xD defaults
+
+if SOC_SERIES_F2837XD
+
+config NUM_IRQS
+	default 128
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+	default 200000000
+
+config FLASH_SIZE
+	default 0x100000
+
+config SRAM_SIZE
+	default 0x32000
+
+endif # SOC_SERIES_F2837XD

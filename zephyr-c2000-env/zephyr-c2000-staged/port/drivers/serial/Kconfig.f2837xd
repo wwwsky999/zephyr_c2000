@@ -1,0 +1,10 @@
+# Copyright (c) 2026 Zephyr C2000 port
+# SPDX-License-Identifier: Apache-2.0
+
+config UART_F2837XD_SCI
+	bool "TI F2837xD SCI-A UART driver"
+	default y
+	depends on DT_HAS_TI_F2837XD_SCIA_ENABLED
+	select SERIAL_HAS_DRIVER
+	help
+	  Polling driver for the TI TMS320F2837xD SCI-A peripheral.

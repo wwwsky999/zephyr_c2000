@@ -1,0 +1,61 @@
+# TI C2000 (C28x) 架构
+#
+# Copyright (C) 2026 WWWSKY999. All rights reserved.
+#
+# C28x 特性：
+# - 16 位字架构，22 位地址总线
+# - char/int/short 均为 16 位
+# - long/指针 为 32 位
+# - 目标器件：TMS320F2837xD 系列 (28377D / 28379D)
+
+config ARCH_C28X
+	bool "TI C2000 C28x"
+	select ATOMIC_OPERATIONS_C
+	select ATOMIC_OPERATIONS_BUILTIN
+	select HAS_CXX
+	select ARCH_C28X_HAS_LINKER_SECTIONS
+	help
+	  TI C2000 (C28x) DSP 架构支持。
+	  C28x 是 16 位字架构，22 位地址总线。
+	  char 为 16 位，int 为 16 位，long 为 32 位。
+	  本移植针对 TMS320F2837xD 系列，使用 TI C2000 编译器 (cl2000)。
+
+if ARCH_C28X
+
+config ARCH_C28X_UNIFIED_MEMORY
+	bool "统一内存模型"
+	default y
+
+config ARCH_C28X_HW_FPU
+	bool "硬件 FPU (FPU32/FPU64)"
+	default y
+
+config ARCH_C28X_LARGE_MODEL
+	bool "大内存模型 (far)"
+	default y
+
+config ARCH_C28X_HAS_LINKER_SECTIONS
+	bool
+	default y
+
+config ARCH_C28X_USE_STACK_CANARY
+	bool "栈金丝雀支持"
+	default n
+
+config ARCH_C28X_SOC_DRIVER
+	bool
+
+config ARCH_C28X_SOC_NAME
+	string
+
+config ARCH_C28X_SOC_FAMILY
+	string
+
+config ARCH_C28X_SMP
+	bool "SMP 支持"
+	default n
+	depends on SMP
+	help
+	  双核 C28x (CPU1/CPU2) 上的对称多处理支持。
+
+endif # ARCH_C28X
