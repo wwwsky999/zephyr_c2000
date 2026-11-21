@@ -1,6 +1,7 @@
 # Upstream clones, west workspace, toolchains and env (not part of this repo)
 /.west/
 /bootloader/
+/build-hello/
 /modules/
 /tools/
 /zephyr/
